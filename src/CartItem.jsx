@@ -15,7 +15,6 @@ const CartItem = ({ onContinueShopping }) => {
         return (item.quantity * parseFloat(item.cost.substring(1))).toFixed(2);
     };
 
-
     const handleIncrement = (item) => {
         dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
     };
@@ -42,12 +41,23 @@ const CartItem = ({ onContinueShopping }) => {
             <div>
                 {cart.map(item => (
                     <div className="cart-item" key={item.name}>
-                        {/* ... (rest of CartItem JSX - unchanged) */}
+                        <img src={item.image} alt={item.name} />
+                        <div className="cart-details">
+                            <span>{item.name}</span>
+                            <p>{item.cost}€</p>
+                            <p>Total: {calculateTotalCost(item)}€</p>
+                            <div className="quantity-controls">
+                                <button onClick={() => handleDecrement(item)}>-</button>
+                                <span>{item.quantity}</span>
+                                <button onClick={() => handleIncrement(item)}>+</button>
+                            </div>
+                            <button onClick={() => handleRemove(item)}>Remove</button>
+                        </div>
                     </div>
                 ))}
             </div>
             <div className="continue_shopping_btn">
-                <button className="get-started-button" onClick={onContinueShopping}>Continue Shopping</button> {/* Use prop directly */}
+                <button className="get-started-button" onClick={onContinueShopping}>Continue Shopping</button>
                 <br />
                 <button className="get-started-button1" onClick={handleCheckoutShopping}>Checkout</button>
             </div>
